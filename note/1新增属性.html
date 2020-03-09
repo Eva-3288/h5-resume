@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H5 新增属性</title>
+</head>
+<body>
+    总结：
+    placeholder\contenteditable 没有兼容问题
+    <hr>
+    1.placeholder：用作提示信息 ，没有兼容性问题
+    <input type="text" placeholder="请输入用户名">
+    <hr>
+
+    2.input 的 新type
+    <!-- 之前的type:text,radio,checkbox,file,password,submit -->
+    <input type="file">
+    <br>---------Calendar类:时间插件，不常用，兼容性不好----------
+    <form>
+        <!-- 写在form表单下 -->
+        
+        <!-- Calendar类：是个大类，不止有一种,兼容性不好，只有chrome支持 -->
+        日期date： <input type="date">  
+        时间time:<input type="time">
+        周 week： <input type="week">
+        年月日+ 时间datetime-local：<input type="datetime-local">
+        <br>
+
+        数字number： <input type="number"><!-- 只有chrome支持 -->
+        邮件email：<input type="email"> <!-- 只有chrome、火狐支持 -->
+        颜色选择器color： <input type="color" name='color'> <!-- 只有chrome支持 -->
+
+        range : <input type="range" min="1" min="100" name='range1'> <!-- 只有chrome、safari支持 -->
+        search : <input type="search" name="search">  <!-- 只有chrome支持,safari支持一点功能 -->
+        url : <input type="url"> <!-- 只有chrome、火狐支持 -->
+        <input type="submit">
+    </form>
+    <hr>
+
+    3.contenteditable  是否可编辑
+
+     1.默认值是false,不可编辑； true的话可编辑 
+     2.没有兼容性问题，可以用来修改表格
+     3.这个属性可以继承，如果继承了想修改当前，也可以覆盖
+    <div contenteditable="true">
+        hello 可编辑
+        <br>
+        <span>world!可编辑</span>
+    </div>
+    <div contenteditable="true">
+        hello 可编辑
+        <br>
+        <span contenteditable="false">world!不可编辑</span>
+        <!-- 注意这里是：span 内部内容不能编辑和删除，但是span标签可以被删除 ，不建议这样嵌套写-->
+    </div>
+    <hr>
+
+    4.draggable  是否可拖拽
+     1.div标签 默认值是false,不可拖拽；a标签/img 默认是true，可拖拽
+     2.只有chrome支持,safari支持, （部分）火狐不支持
+     3.拖拽的声明周期：按下开始移动的瞬间--叫 拖拽开始ondragstart；  移动的时候--拖拽进行中ondrag； 拖拽结束ondragend
+     4.拖拽的组成：被拖拽的物体 和 目标区域
+    <div class='dragBox' style="position:absolute;width:100px;height:100px;background:green;" draggable='true'></div>
+    <script>
+        // 被拖拽的物体
+        var oDragDiv = document.getElementsByClassName('dragBox')[0];
+       /*  
+       oDragDiv.ondragstart = function(e){   //开始事件：按下物体的瞬间是不会触发事件的，必须稍微移动一点点，才触发拖拽开始事件
+            console.log(e);
+            // e.clientX / e.clientY 代表起始的时候鼠标的点
+        }
+        oDragDiv.ondrag = function(e){   //移动事件：也是移动的一瞬间开始触发
+            console.log(e);
+        }
+        oDragDiv.ondragend = function(e){   //结束事件：松开物体的瞬间触发
+            console.log(e);
+        } 
+        */
+        var beginX = 0,
+            beginY = 0
+        oDragDiv.ondragstart = function(e){
+            beginX = e.clientX;    //开始事件里，记录开始的坐标
+            beginY = e.clientY;
+        }
+        oDragDiv.ondragend = function(e){
+            var x = e.clientX - beginX;    //结束事件里，根据结束左边计算拖动的距离
+            var y = e.clientY - beginY;
+            oDragDiv.style.left = oDragDiv.offsetLeft + x + 'px';    //根据原理的偏移量 计算现在的位置
+            oDragDiv.style.top = oDragDiv.offsetTop + y + 'px';
+        }
+    </script>
+</body>
+</html>
