@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas{
+            border: 1px solid #666;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="can" width="500px" height="400px"></canvas>
+
+    <script>
+        var canvas = document.getElementById('can');
+        var ctx = canvas.getContext('2d');
+
+        ctx.moveTo(100,110);   //起点A点, a 本来是100，100 因为有个10d 圆角，所以 a点的y 加了个10px;
+        //ctx.arcTo(B点x,B点y,C点x,C点y，圆角大小-像素来记得)
+        // 相当于从a-b点的线， c点只决定圆角的方向
+        // 最后一个参数，才是圆角的宽度
+        ctx.arcTo(100,200,150,200,10);
+        ctx.arcTo(300,200,300,100,10);
+        ctx.arcTo(300,100,150,100,10);
+        ctx.arcTo(100,100,100,120,10);
+        ctx.stroke();
+
+    </script>
+</body>
+</html>

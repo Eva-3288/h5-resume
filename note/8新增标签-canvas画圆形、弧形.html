@@ -15,7 +15,30 @@
     <!-- 那几个部分组成一个圆：圆心（下，y），半径r，弧度(起始弧度，结束弧度) ，方向(顺时针，逆时针)-->
     <!-- canvas里弧度不是用角度算的，用 Π 算的，Π=180度，自己进行换算 -->
 
-    <canvas id="can" width="500px" height="500px"></canvas>
+    <canvas id="can" width="500px" height="800px"></canvas>
 
+    <script>
+        var canvas = document.getElementById('can');
+        var ctx = canvas.getContext('2d');
+
+        //ctx.arc(圆心x,圆心y，半径，起始弧度，结束弧度,0/1)
+        // 起始位置0，是圆的x轴上的最右边那个点，弧度： 右0  下0.5 Math.PI  左1 Math.PI  上1.5 Math.PI   回来2   ，不管顺时针 还是逆时针，都是这样算的： 0.5 的顺时针 和 逆时针都在最下面
+        // 弧度用Math.PI 算的， Math.PI =180度
+        // 最后一个参数，顺时针0，逆时针1；
+
+        ctx.arc(100,100 , 50 , 0 , Math.PI/2 , 1);   // Math.PI/2 是90度， 这是个90度的弧线
+        ctx.stroke();
+
+        ctx.beginPath();  //新的一笔，不然会连线
+        ctx.arc(100,250,50,0,Math.PI*2,0);   //Math.PI*2  是360度的整圆
+        ctx.stroke();
+
+        ctx.beginPath(); 
+        ctx.arc(100,400,50,0,Math.PI*1.8,0);
+        ctx.lineTo(100,400);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+    </script>
 </body>
 </html>
