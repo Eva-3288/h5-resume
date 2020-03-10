@@ -54,41 +54,6 @@
         <span contenteditable="false">world!不可编辑</span>
         <!-- 注意这里是：span 内部内容不能编辑和删除，但是span标签可以被删除 ，不建议这样嵌套写-->
     </div>
-    <hr>
 
-    4.draggable  是否可拖拽
-     1.div标签 默认值是false,不可拖拽；a标签/img 默认是true，可拖拽
-     2.只有chrome支持,safari支持, （部分）火狐不支持
-     3.拖拽的声明周期：按下开始移动的瞬间--叫 拖拽开始ondragstart；  移动的时候--拖拽进行中ondrag； 拖拽结束ondragend
-     4.拖拽的组成：被拖拽的物体 和 目标区域
-    <div class='dragBox' style="position:absolute;width:100px;height:100px;background:green;" draggable='true'></div>
-    <script>
-        // 被拖拽的物体
-        var oDragDiv = document.getElementsByClassName('dragBox')[0];
-       /*  
-       oDragDiv.ondragstart = function(e){   //开始事件：按下物体的瞬间是不会触发事件的，必须稍微移动一点点，才触发拖拽开始事件
-            console.log(e);
-            // e.clientX / e.clientY 代表起始的时候鼠标的点
-        }
-        oDragDiv.ondrag = function(e){   //移动事件：也是移动的一瞬间开始触发
-            console.log(e);
-        }
-        oDragDiv.ondragend = function(e){   //结束事件：松开物体的瞬间触发
-            console.log(e);
-        } 
-        */
-        var beginX = 0,
-            beginY = 0
-        oDragDiv.ondragstart = function(e){
-            beginX = e.clientX;    //开始事件里，记录开始的坐标
-            beginY = e.clientY;
-        }
-        oDragDiv.ondragend = function(e){
-            var x = e.clientX - beginX;    //结束事件里，根据结束左边计算拖动的距离
-            var y = e.clientY - beginY;
-            oDragDiv.style.left = oDragDiv.offsetLeft + x + 'px';    //根据原理的偏移量 计算现在的位置
-            oDragDiv.style.top = oDragDiv.offsetTop + y + 'px';
-        }
-    </script>
 </body>
 </html>

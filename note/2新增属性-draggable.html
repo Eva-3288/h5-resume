@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H5 新增属性</title>
+    <style>
+        .dragBox{
+            position:absolute;   /*拖拽放下的时候要给left / top 赋值，所以要写position */
+            width:100px;
+            height:100px;
+            background:green;
+        }
+        .target{
+            position:absolute;
+            left:600px;
+            width:200px;
+            height:200px;
+            border:1px solid #666;
+        }
+    </style>
+</head>
+<body>
+    4.draggable  是否可拖拽
+     1.div标签 默认值是false,不可拖拽；a标签/img 默认是true，可拖拽
+     2.只有chrome支持,safari支持, （部分）火狐不支持
+     3.拖拽的声明周期：按下开始移动的瞬间--叫 拖拽开始ondragstart；  移动的时候--拖拽进行中ondrag； 拖拽结束ondragend
+     4.拖拽的组成：被拖拽的物体 和 目标区域
+    <div class='dragBox' draggable='true'>被拖拽的物体</div>
+    
+    <div class="target">目标区域</div>
+    <script>
+        // 被拖拽的物体,及其声明周期------------------
+        var oDragDiv = document.getElementsByClassName('dragBox')[0];
+       /*  
+       oDragDiv.ondragstart = function(e){   //开始事件：按下物体的瞬间是不会触发事件的，必须稍微移动一点点，才触发拖拽开始事件
+            console.log(e);
+            // e.clientX / e.clientY 代表起始的时候鼠标的点
+        }
+        oDragDiv.ondrag = function(e){   //移动事件：也是移动的一瞬间开始触发
+            console.log(e);
+        }
+        oDragDiv.ondragend = function(e){   //结束事件：松开物体的瞬间触发
+            console.log(e);
+        } 
+        */
+        var beginX = 0,
+            beginY = 0
+        oDragDiv.ondragstart = function(e){
+            beginX = e.clientX;    //开始事件里，记录开始的坐标
+            beginY = e.clientY;
+        }
+        oDragDiv.ondragend = function(e){
+            var x = e.clientX - beginX;    //结束事件里，根据结束左边计算拖动的距离
+            var y = e.clientY - beginY;
+            oDragDiv.style.left = oDragDiv.offsetLeft + x + 'px';    //根据原理的偏移量 计算现在的位置
+            oDragDiv.style.top = oDragDiv.offsetTop + y + 'px';   //要设置left / top属性，必须有position 属性
+        }
+
+        // 目标区域/目标元素----------------------------------
+        // 目标区域可以接收过来的元素，
+        var targetDiv = document.getElementsByClassName('target')[0];
+        targetDiv.ondragenter = function(e){   //拖拽进入时触发的事件，不是元素进入就触发，而是拖拽的鼠标进入才触发
+
+        }
+        targetDiv.ondragover = function(e){    //在区域上面移动 触发事件：类似被拖拽物体的 ondrag事件,都是不停的触发
+            e.preventDefault(); //阻止默认事件，
+        }
+        targetDiv.ondragleave = function(e){   //在目标区域离开触发：
+
+        }
+        targetDiv.ondrop = function(e){    // html所有元素，拖拽结束的时候（拖拽周期结束时），默认事件都是回到原处
+            console.log('drop');
+        }
+        // 事件是由行为触发的，但是一个行为可以触发不止一个事件， ondragover 执行完，可以执行   回到原处 ；也可以执行drop事件，默认执行回到原处，要阻止默认事件，才能触发drop事件
+
+    </script>
+</body>
+</html>

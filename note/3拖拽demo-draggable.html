@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box1{
+            width: 150px;
+            height:auto;
+            border: 1px solid #666;
+            position: absolute;
+            padding:10px;
+        }
+        .box2{
+            width: 150px;
+            height:auto;
+            border: 1px solid #666;
+            position: absolute;
+            left:300px;
+            padding:10px;
+        }
+        li{
+            list-style: none;
+            width:100px;
+            height:30px;
+            background: green;
+            position: relative;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box1">
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+    </div>
+    <div class="box2"></div>
+    <script>
+        var dragDom;  //用来存拖拽的是哪个元素
+        var liList = document.getElementsByTagName('li');
+        for(let i = 0;i < liList.length;i++){
+            liList[i].setAttribute('draggable',true);   //设置属性，让其可拖拽
+            liList[i].ondragstart = function(e){
+                dragDom = e.target;  //e.target 是事件的触发源，就是谁触发了这个事件，就是拖拽的元素
+                e.dataTransfer.effectAllowed = 'link';  //这个属性必须在 ondragstart里写，其他里面不好使，link 是链接
+            }
+        }
+        
+        var box2 = document.getElementsByClassName('box2')[0];
+        box2.ondragover = function(e){
+            e.preventDefault();  //阻止默认事件
+        }
+        box2.ondrop = function(e){   //要放下，就要先阻止默认事件
+            box2.appendChild(dragDom);
+            dragDom = null;
+        }
+
+        var box1 = document.getElementsByClassName('box1')[0];    //这样box1  和 box2 都是拖拽区域了，可以在两个区域来回拖拽
+        box1.ondragover = function(e){
+            e.preventDefault(); 
+        }
+        box1.ondrop = function(e){   
+            e.dataTransfer.dropEffect = 'link'; // 这个必须放在drop里，要和拖拽原理ondragstart里的allow相对应
+            box1.appendChild(dragDom);
+            dragDom = null;
+        }
+    </script>
+</body>
+</html>

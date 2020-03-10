@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canvas 画线</title>
+    <style>
+        /* 用css 给canvas 设置大小，这不是画布大小，画布大小要在行间上写样式 width='300px'  height='300px'*/
+        canvas{
+            /* width: 500px;
+            height: 500px; */
+            border:1px solid #666;
+        }
+    </style>
+</head>
+<body>
+    <!-- 画布/画板 -->
+    <canvas id="can"  width='300px'  height='300px'></canvas>
+    <script>
+        // canvas是用js去操作画东西
+        var canvas = document.getElementById('can');  //获取canvas元素，这只是一块白板
+        var ctx = canvas.getContext('2d'); // 获取内容区，可以理解为画笔, 用这个ctx 在canvas上画画, 这个画板是画2d图形的，要传一个参数'2d'
+
+        // 画画要有起点 和 终点
+        ctx.moveTo(100,100);    // 用 moveTo()指定起点
+        ctx.lineTo(200,100);   // lineTo() 指定用线画到哪，规划一个路径，不是真的画出来了
+        ctx.lineTo(200,200);
+        ctx.lineWidth = 10;  // 指定线的宽度,不管写在哪都相当于写在了moveTo()的前面
+        ctx.lineTo(189,256);   //上面的这3个lineTo 是一笔画下来的，只是拐了多拐，一笔只能是一个线的宽度
+        ctx.stroke();  //每一笔都要渲染一下
+
+        // 如果想多笔去画，用.beginPath()重新开启一个路径，重新开启后还是要从moveTo()开始
+        ctx.beginPath();
+        ctx.lineWidth = 5;  //设置新写的这一笔的线的宽度
+        ctx.moveTo(189,256);  //开启新的一笔，也要写起点位置
+        ctx.lineTo(100,100);
+
+        // ctx.closePath();   // 回到起点，如果我们图形画的比较复杂，也不知道起点在哪了，用这个,只有线是连续的一根线就能闭合；一笔才可以闭合；
+        // 针对当前的路径进行闭合，必须要两边个lineTo 后才能闭合，一个lineTo无法闭合
+        // ctx.fill();   //填充，也要填充一根线的
+       
+       
+        ctx.stroke();    // 渲染
+        
+    </script>
+</body>
+</html>
