@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas{
+            border: 1px solid #666;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="can" width="500px" height="1000px"></canvas>
+
+    <script>
+        var canvas = document.getElementById('can');
+        var ctx = canvas.getContext('2d');
+
+        ctx.beginPath();
+        ctx.moveTo(100,100);    //起点
+        ctx.quadraticCurveTo(200,200,300,100);    // 二次 贝塞尔曲线  ，里面是第二个点 和第三个点的坐标
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.moveTo(100,300);    //起点
+        ctx.bezierCurveTo(200,400,300,100,400,300);    // 三次 贝塞尔曲线  ，里面是第二个点 和第三个点的坐标
+        ctx.stroke();
+
+        // 画一个波浪
+        var width = 500 , height = 600 ,offset = 0;
+        
+        setInterval(function(){
+            ctx.clearRect(0,500,500,700);   //每次都清除区域
+            ctx.beginPath();
+
+            ctx.moveTo(0+offset-500, height);   //重新画，让x方向定位加一个变量
+            ctx.quadraticCurveTo( width / 4 + offset-500,height-100,width/2 + offset-500,height);
+            ctx.quadraticCurveTo( width / 4*3 + offset-500,height+100,width + offset-500,height);  
+
+            ctx.moveTo(0+offset, height);   //重新画，让x方向定位加一个变量
+            ctx.quadraticCurveTo( width / 4 + offset,height-100,width/2 + offset,height);
+            ctx.quadraticCurveTo( width / 4*3 + offset,height+100,width + offset,height);  
+            
+            ctx.stroke();
+            offset += 1 ;   //变量每次加1
+            offset %= 500;
+        },1000/30)
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas{
+            border: 1px solid #666;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="can" width="500px" height="400px"></canvas>
+
+    <script>
+        var canvas = document.getElementById('can');
+        var ctx = canvas.getContext('2d');
+        ctx.beginPath();
+        ctx.scale(2,1);  //缩放，让所有的x都乘以2，y *1
+        ctx.strokeRect(0,0,100,100);
+
+        ctx.beginPath();
+        ctx.translate(100,100);  //坐标平移，将原点从0，0  移到100，100
+        ctx.moveTo(0,100);   // 加了translate之后，后面的所有坐标都要加上这个平移的坐标
+        ctx.rotate(Math.PI/6)   //旋转：默认根据画布的原点(0,0)进行旋转的，加了translate之后 ，相对于平移的坐标进行顺时针旋转
+        ctx.lineTo(200,100);
+        ctx.stroke();
+
+        
+
+        
+    </script>
+</body>
+</html>
