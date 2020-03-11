@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        canvas{
+            border: 1px solid #666;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="can" width="500px" height="1000px"></canvas>
+    <script>
+        var canvas = document.getElementById('can');
+        var ctx = canvas.getContext('2d');
+
+        // 1. 默认是黑色
+        ctx.strokeRect(100,100,200,100);   //构建路径 + 渲染
+
+        //2.自定义填充颜色
+        ctx.fillStyle='red';   
+        ctx.fillRect(100,300,200,100);  
+
+        // //3. 也可以填充图片
+        // var img = new Image();
+        // img.src = './timg.jpg';    //src加载时异步加载的，有时候会还没加载完就执行下面的渲染了
+        // img.onload = function(){
+        //     ctx.beginPath();
+        //     var bg = ctx.createPattern(img,'no-repeat');   //创建纹理（纹理图片， 是否重复）
+        //     // 纹理的填充，以坐标系原点开始填充的，图片默认在0，0开始填充的，需要改变坐标系的位置，translate
+        //     ctx.save();
+        //     ctx.translate(100,500);
+        //     ctx.fillStyle = bg ;   //自定义填充颜色
+        //     ctx.fillRect(0,0,200,100);  
+        //     ctx.restore();
+        // }
+
+        //4. 填充线性渐变
+        ctx.beginPath();
+        var bg1 = ctx.createLinearGradient(100,0,300,0);   //创建一个线性渐变(x0,y0,x1,y1)，从x点 到  y点的渐变
+        bg1.addColorStop(0,'white');  //关键帧, 按百分比算的，只有从0到1
+        bg1.addColorStop(0.5,'red'); 
+        bg1.addColorStop(1,'black'); 
+        // 线性渐变的起始点 还是坐标系0，0 开始的
+        ctx.fillStyle = bg1;
+        ctx.fillRect(100,700,200,100);
+
+        // 填充辐射渐变
+        
+    </script>
+</body>
+</html>

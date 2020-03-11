@@ -17,18 +17,29 @@
         var canvas = document.getElementById('can');
         var ctx = canvas.getContext('2d');
         ctx.beginPath();
-        ctx.scale(2,1);  //缩放，让所有的x都乘以2，y *1
+        ctx.save();
+        ctx.scale(2,1);  //3. 缩放，让所有的x都乘以2，y *1
         ctx.strokeRect(0,0,100,100);
+        ctx.restore();
 
         ctx.beginPath();
-        ctx.translate(100,100);  //坐标平移，将原点从0，0  移到100，100
+        ctx.save();  //4。 存储当前的坐标平移translate，旋转rotate，缩放sacle之前的状态
+        ctx.translate(100,100);  //1. 坐标系平移，将原点从0，0  移到100，100
         ctx.moveTo(0,100);   // 加了translate之后，后面的所有坐标都要加上这个平移的坐标
-        ctx.rotate(Math.PI/6)   //旋转：默认根据画布的原点(0,0)进行旋转的，加了translate之后 ，相对于平移的坐标进行顺时针旋转
+        ctx.rotate(Math.PI/6)   //2. 旋转：默认根据画布的原点(0,0)进行旋转的，加了translate之后 ，相对于平移的坐标进行顺时针旋转
         ctx.lineTo(200,100);
         ctx.stroke();
+        ctx.restore();   //5. 渲染完后，恢复状态，以至于不会影响到别的画图
+
+        // 坐标平移translate，旋转rotate，缩放sacle 如果不用save 和 restore是对全局起作用的
+
+        // 上面两个图要坐标平移translate，旋转rotate，缩放sacle， 
+        /*   
+        可以先 ctx.save(); 保存没有修改前的状态，然后修改，修改渲染完后，
+        ctx.restore();  恢复之前没修改的状态 
+        */
 
         
-
         
     </script>
 </body>
